@@ -3,16 +3,13 @@ package server
 import (
 	logger "dcrcs-go/utils"
 	"fmt"
-	"math/rand"
 	"net/http"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
 func Server() *gin.Engine {
 	go func() {
-		rand.Seed(time.Now().UnixNano())
 		http.HandleFunc("/event", CorsHandler(SseHandler))
 		http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, `{"status": "ok"}`)
